@@ -1,126 +1,330 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>Tiny Decision Buddy</title>
 
-    <link rel="stylesheet" href="style.css">
+    <meta
+        name="description"
+        content="A tiny companion for everyday decisions."
+    >
+
+    <!-- Google Fonts -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
+
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;700;800&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" href="css/reset.css">
+
+    <link rel="stylesheet" href="css/variables.css">
+
+    <link rel="stylesheet" href="css/style.css">
+
 </head>
 
 <body>
 
-    <!-- Floating Background -->
-    <div class="blob blob1"></div>
-    <div class="blob blob2"></div>
-    <div class="blob blob3"></div>
+    <!-- Background -->
 
-    <!-- Main Card -->
-    <main class="container">
+    <div class="background">
 
-        <div class="buddy-section">
+        <div class="background__texture"></div>
 
-            <div id="buddy" class="buddy">
+        <div class="background__leaf leaf-1"></div>
+        <div class="background__leaf leaf-2"></div>
+        <div class="background__leaf leaf-3"></div>
 
-                <div class="eyes">
-                    <span class="eye"></span>
-                    <span class="eye"></span>
-                </div>
+    </div>
 
-                <div class="mouth"></div>
+    <!-- Main -->
 
-            </div>
+    <main class="app">
 
-            <h1>Tiny Decision Buddy</h1>
+        <!-- Brand -->
 
-            <p class="subtitle">
-                A tiny companion for life's tiny decisions.
-            </p>
+        <header class="hero">
 
-        </div>
-
-        <!-- Question -->
-
-        <div class="input-area">
-
-            <input
-                id="questionInput"
-                type="text"
-                maxlength="150"
-                placeholder="Should I buy that book?"
+            <img
+                src="assets/buddy.svg"
+                alt="Tiny Decision Buddy"
+                class="hero__buddy"
             >
 
-            <button id="decideBtn">
-                🌼 Help Me Decide
-            </button>
+            <h1 class="hero__title">
 
-        </div>
+                Tiny Decision Buddy
 
-        <!-- Thinking -->
+            </h1>
 
-        <div id="thinking" class="thinking hidden">
+            <p class="hero__subtitle">
 
-            <span></span>
-            <span></span>
-            <span></span>
+                A tiny companion for everyday decisions.
 
-            <p>Thinking...</p>
+            </p>
 
-        </div>
+        </header>
 
-        <!-- Result -->
+        <!-- Decision Area -->
 
-        <section id="resultCard" class="result-card hidden">
+        <section
+            class="decision"
+            aria-labelledby="question-label"
+        >
 
-            <h2 id="category"></h2>
+            <label
+                id="question-label"
+                class="sr-only"
+                for="question"
+            >
+                Ask your question
+            </label>
 
-            <p id="response"></p>
+            <textarea
 
-            <button id="againBtn">
-                Decide Again
+                id="question"
+
+                class="decision__input"
+
+                rows="2"
+
+                maxlength="200"
+
+                placeholder="Should I buy that book?"
+
+            ></textarea>
+
+            <p class="decision__hint">
+
+                Press Enter or click Decide
+
+            </p>
+
+            <button
+
+                class="decision__button"
+
+                id="decideButton"
+
+                type="button"
+
+            >
+
+                Decide
+
             </button>
 
         </section>
 
-        <!-- History -->
+        <!-- Loading -->
 
-        <section class="history">
+        <section
 
-            <div class="history-header">
+            id="loading"
 
-                <h3>Recent Decisions</h3>
+            class="loading hidden"
 
-                <button id="clearHistory">
-                    Clear
-                </button>
+            aria-live="polite"
+
+        >
+
+            <div class="loading__buddy">
+
+                <img
+
+                    src="assets/buddy.svg"
+
+                    alt=""
+
+                    aria-hidden="true"
+
+                >
 
             </div>
 
-            <ul id="historyList">
+            <p id="loadingText">
 
-                <li>No decisions yet.</li>
+                Taking a moment...
 
-            </ul>
+            </p>
+
+        </section>
+
+        <!-- Result -->
+
+        <section
+
+            id="result"
+
+            class="result hidden"
+
+            aria-live="polite"
+
+        >
+
+            <div class="result__card">
+
+                <span
+
+                    id="resultCategory"
+
+                    class="result__category"
+
+                >
+
+                    Go for it.
+
+                </span>
+
+                <h2
+
+                    id="resultTitle"
+
+                    class="result__title"
+
+                >
+
+                    Go for it.
+
+                </h2>
+
+                <p
+
+                    id="resultMessage"
+
+                    class="result__message"
+
+                >
+
+                    You've thought about this long enough.
+
+                </p>
+
+                <div class="result__actions">
+
+                    <button
+
+                        id="againButton"
+
+                        class="button button--secondary"
+
+                    >
+
+                        Ask Again
+
+                    </button>
+
+                    <button
+
+                        id="saveButton"
+
+                        class="button button--primary"
+
+                    >
+
+                        Save
+
+                    </button>
+
+                </div>
+
+            </div>
 
         </section>
 
     </main>
 
-    <!-- Footer -->
+    <!-- History -->
 
-    <footer>
+    <aside
 
-        Built with ❤️ for indecisive humans.
+        id="historyPanel"
 
-    </footer>
+        class="history"
 
-    <script src="responses.js"></script>
-    <script src="script.js"></script>
+        aria-label="Decision history"
+
+    >
+
+        <div class="history__header">
+
+            <h2>
+
+                Your Decisions
+
+            </h2>
+
+            <button
+
+                id="closeHistory"
+
+                class="icon-button"
+
+                aria-label="Close history"
+
+            >
+
+                ✕
+
+            </button>
+
+        </div>
+
+        <div
+
+            id="historyList"
+
+            class="history__content"
+
+        >
+
+        </div>
+
+    </aside>
+
+    <!-- Floating Buttons -->
+
+    <button
+
+        class="floating-button floating-button--history"
+
+        id="historyButton"
+
+        aria-label="Open history"
+
+    >
+
+        History
+
+    </button>
+
+    <button
+
+        class="floating-button floating-button--theme"
+
+        id="themeButton"
+
+        aria-label="Change appearance"
+
+    >
+
+        Theme
+
+    </button>
+
+    <script src="js/app.js"></script>
 
 </body>
+
 </html>
