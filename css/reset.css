@@ -1,0 +1,106 @@
+/* ==========================================
+   Tiny Decision Buddy
+   CSS Reset
+========================================== */
+
+*,
+*::before,
+*::after{
+    box-sizing:border-box;
+}
+
+html{
+    font-size:16px;
+    scroll-behavior:smooth;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+figure,
+blockquote,
+dl,
+dd{
+    margin:0;
+}
+
+body{
+    min-height:100vh;
+    text-rendering:optimizeLegibility;
+    -webkit-font-smoothing:antialiased;
+}
+
+img,
+picture,
+svg,
+video{
+    display:block;
+    max-width:100%;
+}
+
+input,
+textarea,
+button,
+select{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+    background:none;
+    border:none;
+}
+
+textarea{
+    resize:none;
+}
+
+ul,
+ol{
+    list-style:none;
+    padding:0;
+    margin:0;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+:focus-visible{
+    outline:3px solid rgba(112,140,104,.35);
+    outline-offset:4px;
+}
+
+.hidden{
+    display:none !important;
+}
+
+/* Screen reader only */
+
+.sr-only{
+
+    position:absolute;
+
+    width:1px;
+
+    height:1px;
+
+    padding:0;
+
+    margin:-1px;
+
+    overflow:hidden;
+
+    clip:rect(0,0,0,0);
+
+    white-space:nowrap;
+
+    border:0;
+
+}
