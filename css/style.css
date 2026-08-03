@@ -1,0 +1,1607 @@
+/* ===========================================================
+   Tiny Decision Buddy
+   style.css
+
+   PART 1
+   - Body
+   - Background
+   - Layout
+   - Hero
+   - Typography
+=========================================================== */
+
+
+/* ==========================================
+   BODY
+========================================== */
+
+body{
+
+    font-family:"Inter",sans-serif;
+
+    color:var(--ink);
+
+    background:var(--paper);
+
+    overflow:hidden;
+
+    position:relative;
+
+}
+
+
+/* ==========================================
+   BACKGROUND
+========================================== */
+
+.background{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:-1;
+
+    overflow:hidden;
+
+}
+
+
+/* paper grain */
+
+.background__texture{
+
+    position:absolute;
+
+    inset:0;
+
+    opacity:.035;
+
+    background-image:url("../assets/grain.png");
+
+    background-size:280px;
+
+    pointer-events:none;
+
+}
+
+
+/* ==========================================
+   Floating Leaves
+========================================== */
+
+.background__leaf{
+
+    position:absolute;
+
+    width:26px;
+
+    height:26px;
+
+    border-radius:100px;
+
+    background:rgba(184,201,174,.22);
+
+    filter:blur(.4px);
+
+}
+
+.leaf-1{
+
+    top:12%;
+
+    left:8%;
+
+}
+
+.leaf-2{
+
+    top:72%;
+
+    right:9%;
+
+}
+
+.leaf-3{
+
+    bottom:18%;
+
+    left:16%;
+
+}
+
+
+/* ==========================================
+   APP
+========================================== */
+
+.app{
+
+    width:min(
+        680px,
+        92%
+    );
+
+    min-height:100vh;
+
+    margin:auto;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+}
+
+
+/* ==========================================
+   HERO
+========================================== */
+
+.hero{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    gap:18px;
+
+    margin-bottom:52px;
+
+}
+
+
+/* ==========================================
+   Buddy
+========================================== */
+
+.hero__buddy{
+
+    width:170px;
+
+    user-select:none;
+
+    pointer-events:none;
+
+}
+
+
+/* ==========================================
+   TITLE
+========================================== */
+
+.hero__title{
+
+    font-family:"Manrope",sans-serif;
+
+    font-size:3.25rem;
+
+    font-weight:800;
+
+    letter-spacing:-0.04em;
+
+    line-height:1.05;
+
+    max-width:700px;
+
+}
+
+
+/* ==========================================
+   SUBTITLE
+========================================== */
+
+.hero__subtitle{
+
+    max-width:470px;
+
+    color:var(--muted);
+
+    font-size:1.1rem;
+
+    line-height:1.8;
+
+}
+
+
+/* ==========================================
+   Decorative Divider
+========================================== */
+
+.hero::after{
+
+    content:"";
+
+    width:56px;
+
+    height:4px;
+
+    border-radius:999px;
+
+    background:var(--sage);
+
+    margin-top:10px;
+
+    opacity:.45;
+
+}
+
+
+/* ==========================================
+   Selection
+========================================== */
+
+::selection{
+
+    background:var(--sage);
+
+    color:white;
+
+}
+
+
+/* ==========================================
+   Scrollbar
+========================================== */
+
+::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#DAD6CE;
+
+    border-radius:100px;
+
+}
+
+
+/* ==========================================
+   Footer
+========================================== */
+
+footer{
+
+    position:fixed;
+
+    bottom:28px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    font-size:.88rem;
+
+    color:var(--muted);
+
+    letter-spacing:.02em;
+
+    user-select:none;
+
+    opacity:.75;
+
+}
+
+
+/* ==========================================
+   Helpers
+========================================== */
+
+.hidden{
+
+    display:none;
+
+}            </div>
+
+            <h1>Tiny Decision Buddy</h1>
+
+            <p class="subtitle">
+                A tiny companion for life's tiny decisions.
+            </p>
+
+        </div>
+
+        <!-- Question -->
+
+        <div class="input-area">
+
+            <input
+                id="questionInput"
+                type="text"
+                maxlength="150"
+                placeholder="Should I buy that book?"
+            >
+
+            <button id="decideBtn">
+                🌼 Help Me Decide
+            </button>
+
+        </div>
+
+        <!-- Thinking -->
+
+        <div id="thinking" class="thinking hidden">
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+            <p>Thinking...</p>
+
+        </div>
+
+        <!-- Result -->
+
+        <section id="resultCard" class="result-card hidden">
+
+            <h2 id="category"></h2>
+
+            <p id="response"></p>
+
+            <button id="againBtn">
+                Decide Again
+            </button>
+
+        </section>
+
+        <!-- History -->
+
+        <section class="history">
+
+            <div class="history-header">
+
+                <h3>Recent Decisions</h3>
+
+                <button id="clearHistory">
+                    Clear
+                </button>
+
+            </div>
+
+            <ul id="historyList">
+
+                <li>No decisions yet.</li>
+
+            </ul>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+
+    <footer>
+
+        Built with ❤️ for indecisive humans.
+
+    </footer>
+
+    <script src="responses.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>
+/* ===========================================================
+   PART 2
+   Decision Area
+   Buddy Animation
+   Input
+   Buttons
+=========================================================== */
+
+
+/* ==========================================
+   DECISION AREA
+========================================== */
+
+.decision{
+
+    width:100%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:20px;
+
+}
+
+
+/* ==========================================
+   INPUT
+========================================== */
+
+.decision__input{
+
+    width:100%;
+
+    min-height:74px;
+
+    padding:24px 26px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:var(--radius-lg);
+
+    background:var(--surface);
+
+    color:var(--ink);
+
+    font-size:1.05rem;
+
+    line-height:1.7;
+
+    box-shadow:var(--shadow-soft);
+
+    transition:
+
+        transform .35s cubic-bezier(.2,.8,.2,1),
+
+        box-shadow .35s ease,
+
+        background .35s ease;
+
+}
+
+
+/* Placeholder */
+
+.decision__input::placeholder{
+
+    color:#A3A3A3;
+
+}
+
+
+/* Focus */
+
+.decision__input:focus{
+
+    transform:translateY(-3px);
+
+    box-shadow:var(--shadow-hover);
+
+}
+
+
+/* ==========================================
+   Hint Text
+========================================== */
+
+.decision__hint{
+
+    font-size:.9rem;
+
+    color:var(--muted);
+
+    margin-top:-8px;
+
+}
+
+
+/* ==========================================
+   PRIMARY BUTTON
+========================================== */
+
+.decision__button{
+
+    width:220px;
+
+    height:58px;
+
+    margin-inline:auto;
+
+    border-radius:999px;
+
+    background:var(--forest);
+
+    color:white;
+
+    font-weight:600;
+
+    letter-spacing:.02em;
+
+    transition:
+
+        transform .25s ease,
+
+        box-shadow .25s ease,
+
+        background .25s ease;
+
+    box-shadow:
+
+        0 10px 25px rgba(86,112,82,.18);
+
+}
+
+
+/* Hover */
+
+.decision__button:hover{
+
+    background:var(--forest-dark);
+
+    transform:translateY(-3px);
+
+    box-shadow:
+
+        0 18px 35px rgba(86,112,82,.22);
+
+}
+
+
+/* Click */
+
+.decision__button:active{
+
+    transform:scale(.97);
+
+}
+
+
+/* ==========================================
+   Reusable Buttons
+========================================== */
+
+.button{
+
+    border:none;
+
+    padding:14px 24px;
+
+    border-radius:999px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.button--primary{
+
+    background:var(--forest);
+
+    color:white;
+
+}
+
+.button--secondary{
+
+    background:var(--surface);
+
+    color:var(--ink);
+
+    box-shadow:var(--shadow-soft);
+
+}
+
+
+/* ==========================================
+   BUDDY
+========================================== */
+
+.hero__buddy{
+
+    animation:
+
+        breathe 5s ease-in-out infinite;
+
+}
+
+
+/* ==========================================
+   Breathe Animation
+========================================== */
+
+@keyframes breathe{
+
+    0%{
+
+        transform:
+
+            translateY(0)
+
+            scale(1);
+
+    }
+
+    50%{
+
+        transform:
+
+            translateY(-6px)
+
+            scale(1.015);
+
+    }
+
+    100%{
+
+        transform:
+
+            translateY(0)
+
+            scale(1);
+
+    }
+
+}
+
+
+/* ==========================================
+   Buddy Hover
+========================================== */
+
+.hero__buddy:hover{
+
+    animation-play-state:paused;
+
+    transform:rotate(-4deg);
+
+}
+
+
+/* ==========================================
+   Intro Fade
+========================================== */
+
+.hero{
+
+    animation:
+
+        heroAppear 900ms ease;
+
+}
+
+
+@keyframes heroAppear{
+
+    from{
+
+        opacity:0;
+
+        transform:
+
+            translateY(18px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+
+            translateY(0);
+
+    }
+
+}
+
+
+/* ==========================================
+   Floating Card Effect
+========================================== */
+
+.decision{
+
+    padding:36px;
+
+    border-radius:36px;
+
+    background:rgba(255,255,255,.55);
+
+    backdrop-filter:blur(18px);
+
+}
+
+
+/* ==========================================
+   Gentle Hover
+========================================== */
+
+.decision:hover{
+
+    transform:translateY(-2px);
+
+    transition:.35s;
+
+}
+
+
+/* ==========================================
+   Input Glow
+========================================== */
+
+.decision__input:focus{
+
+    background:white;
+
+}
+
+
+/* ==========================================
+   Tiny Divider
+========================================== */
+
+.decision::before{
+
+    content:"";
+
+    width:42px;
+
+    height:4px;
+
+    border-radius:100px;
+
+    background:var(--clay);
+
+    margin:0 auto;
+
+    opacity:.45;
+
+}
+
+/* ===========================================================
+   PART 3
+   Loading
+   Result
+   History Drawer
+=========================================================== */
+
+
+/* ==========================================
+   Loading
+========================================== */
+
+.loading{
+
+    width:100%;
+
+    margin-top:48px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    gap:22px;
+
+    animation:fadeUp .45s ease;
+
+}
+
+
+.loading__buddy{
+
+    width:82px;
+
+    animation:thinking 2.5s ease-in-out infinite;
+
+}
+
+
+.loading p{
+
+    color:var(--muted);
+
+    font-size:1rem;
+
+    letter-spacing:.02em;
+
+}
+
+
+/* ==========================================
+   Thinking Animation
+========================================== */
+
+@keyframes thinking{
+
+    0%{
+
+        transform:rotate(0deg);
+
+    }
+
+    25%{
+
+        transform:rotate(-6deg);
+
+    }
+
+    50%{
+
+        transform:rotate(6deg);
+
+    }
+
+    75%{
+
+        transform:rotate(-4deg);
+
+    }
+
+    100%{
+
+        transform:rotate(0deg);
+
+    }
+
+}
+
+
+/* ==========================================
+   Result Section
+========================================== */
+
+.result{
+
+    width:100%;
+
+    margin-top:40px;
+
+    animation:fadeUp .5s ease;
+
+}
+
+
+.result__card{
+
+    background:var(--surface);
+
+    border-radius:32px;
+
+    padding:48px;
+
+    box-shadow:var(--shadow-soft);
+
+}
+
+
+/* ==========================================
+   Result Category
+========================================== */
+
+.result__category{
+
+    display:inline-block;
+
+    margin-bottom:18px;
+
+    color:var(--forest);
+
+    font-weight:600;
+
+    font-size:.95rem;
+
+    letter-spacing:.08em;
+
+    text-transform:uppercase;
+
+}
+
+
+/* ==========================================
+   Result Title
+========================================== */
+
+.result__title{
+
+    font-family:"Manrope",sans-serif;
+
+    font-size:2.3rem;
+
+    line-height:1.15;
+
+    margin-bottom:20px;
+
+    letter-spacing:-.03em;
+
+}
+
+
+/* ==========================================
+   Result Message
+========================================== */
+
+.result__message{
+
+    max-width:480px;
+
+    margin-inline:auto;
+
+    font-size:1.1rem;
+
+    color:var(--text);
+
+    line-height:1.9;
+
+}
+
+
+/* ==========================================
+   Result Buttons
+========================================== */
+
+.result__actions{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:16px;
+
+    margin-top:42px;
+
+}
+
+
+/* ==========================================
+   History Drawer
+========================================== */
+
+.history{
+
+    position:fixed;
+
+    top:0;
+
+    right:-420px;
+
+    width:400px;
+
+    height:100vh;
+
+    background:var(--surface);
+
+    box-shadow:
+
+        -25px 0 60px rgba(0,0,0,.08);
+
+    transition:right .45s cubic-bezier(.2,.8,.2,1);
+
+    display:flex;
+
+    flex-direction:column;
+
+    z-index:100;
+
+}
+
+
+/* Open State */
+
+.history.is-open{
+
+    right:0;
+
+}
+
+
+/* ==========================================
+   Header
+========================================== */
+
+.history__header{
+
+    padding:34px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    border-bottom:1px solid var(--line);
+
+}
+
+
+.history__header h2{
+
+    font-family:"Manrope";
+
+    font-size:1.5rem;
+
+}
+
+
+/* ==========================================
+   Content
+========================================== */
+
+.history__content{
+
+    flex:1;
+
+    overflow:auto;
+
+    padding:26px;
+
+}
+
+
+/* ==========================================
+   History Card
+========================================== */
+
+.history-item{
+
+    background:var(--surface-soft);
+
+    border-radius:22px;
+
+    padding:22px;
+
+    margin-bottom:18px;
+
+    transition:.3s;
+
+}
+
+
+.history-item:hover{
+
+    transform:translateY(-2px);
+
+}
+
+
+.history-item h3{
+
+    font-size:1rem;
+
+    margin-bottom:10px;
+
+    font-weight:600;
+
+}
+
+
+.history-item p{
+
+    color:var(--muted);
+
+    line-height:1.7;
+
+}
+
+
+/* ==========================================
+   Floating Buttons
+========================================== */
+
+.floating-button{
+
+    position:fixed;
+
+    bottom:38px;
+
+    border-radius:999px;
+
+    background:white;
+
+    padding:14px 22px;
+
+    box-shadow:var(--shadow-soft);
+
+    transition:.3s;
+
+}
+
+
+.floating-button:hover{
+
+    transform:translateY(-3px);
+
+}
+
+
+.floating-button--history{
+
+    right:38px;
+
+}
+
+
+.floating-button--theme{
+
+    left:38px;
+
+}
+
+
+/* ==========================================
+   Icon Button
+========================================== */
+
+.icon-button{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:50%;
+
+    display:grid;
+
+    place-items:center;
+
+    transition:.3s;
+
+}
+
+
+.icon-button:hover{
+
+    background:var(--paper);
+
+}
+
+
+/* ==========================================
+   Fade Animation
+========================================== */
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+/* ==========================================================
+
+PART 4
+
+Animations
+Utilities
+Responsive
+Polish
+
+========================================================== */
+
+
+/* ==========================================
+   Floating Leaves
+========================================== */
+
+.leaf-1{
+
+    animation:floatLeafOne 18s ease-in-out infinite;
+
+}
+
+.leaf-2{
+
+    animation:floatLeafTwo 22s ease-in-out infinite;
+
+}
+
+.leaf-3{
+
+    animation:floatLeafThree 16s ease-in-out infinite;
+
+}
+
+@keyframes floatLeafOne{
+
+    0%,100%{
+
+        transform:translateY(0) rotate(0deg);
+
+    }
+
+    50%{
+
+        transform:translateY(-22px) rotate(8deg);
+
+    }
+
+}
+
+@keyframes floatLeafTwo{
+
+    0%,100%{
+
+        transform:translateX(0);
+
+    }
+
+    50%{
+
+        transform:translateX(-18px);
+
+    }
+
+}
+
+@keyframes floatLeafThree{
+
+    0%,100%{
+
+        transform:translateY(0);
+
+    }
+
+    50%{
+
+        transform:translateY(20px);
+
+    }
+
+}
+
+
+/* ==========================================
+   Buttons
+========================================== */
+
+button{
+
+    transition:
+
+        transform .25s cubic-bezier(.2,.8,.2,1),
+
+        box-shadow .25s ease,
+
+        background-color .25s ease,
+
+        color .25s ease;
+
+}
+
+button:hover{
+
+    transform:translateY(-2px);
+
+}
+
+button:active{
+
+    transform:scale(.97);
+
+}
+
+
+/* ==========================================
+   Input
+========================================== */
+
+.decision__input{
+
+    transition:
+
+        box-shadow .35s ease,
+
+        transform .35s ease,
+
+        border-color .35s ease;
+
+}
+
+.decision__input:hover{
+
+    box-shadow:
+
+        0 24px 50px rgba(0,0,0,.08);
+
+}
+
+
+/* ==========================================
+   Fade Utility
+========================================== */
+
+.fade-in{
+
+    animation:fadeIn .45s ease;
+
+}
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+    }
+
+    to{
+
+        opacity:1;
+
+    }
+
+}
+
+
+/* ==========================================
+   Slide Up
+========================================== */
+
+.slide-up{
+
+    animation:slideUp .45s cubic-bezier(.2,.8,.2,1);
+
+}
+
+@keyframes slideUp{
+
+    from{
+
+        opacity:0;
+
+        transform:
+
+            translateY(18px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+
+            translateY(0);
+
+    }
+
+}
+
+
+/* ==========================================
+   Soft Pulse
+========================================== */
+
+.pulse{
+
+    animation:pulse 2.5s ease infinite;
+
+}
+
+@keyframes pulse{
+
+    0%,100%{
+
+        transform:scale(1);
+
+    }
+
+    50%{
+
+        transform:scale(1.015);
+
+    }
+
+}
+
+
+/* ==========================================
+   Result Card Hover
+========================================== */
+
+.result__card{
+
+    transition:
+
+        transform .35s ease,
+
+        box-shadow .35s ease;
+
+}
+
+.result__card:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+
+        0 28px 70px rgba(0,0,0,.08);
+
+}
+
+
+/* ==========================================
+   History Scrollbar
+========================================== */
+
+.history__content::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+.history__content::-webkit-scrollbar-thumb{
+
+    background:#D8D3CB;
+
+    border-radius:999px;
+
+}
+
+
+/* ==========================================
+   Mobile
+========================================== */
+
+@media(max-width:900px){
+
+    .history{
+
+        width:100%;
+
+        right:-100%;
+
+    }
+
+    .history.is-open{
+
+        right:0;
+
+    }
+
+}
+
+
+@media(max-width:768px){
+
+    .hero__title{
+
+        font-size:2.5rem;
+
+    }
+
+    .hero__subtitle{
+
+        font-size:1rem;
+
+    }
+
+    .hero__buddy{
+
+        width:135px;
+
+    }
+
+    .decision{
+
+        padding:28px;
+
+    }
+
+    .decision__button{
+
+        width:100%;
+
+    }
+
+    .result__card{
+
+        padding:36px 28px;
+
+    }
+
+    .result__title{
+
+        font-size:1.8rem;
+
+    }
+
+    .floating-button{
+
+        bottom:20px;
+
+    }
+
+    .floating-button--history{
+
+        right:20px;
+
+    }
+
+    .floating-button--theme{
+
+        left:20px;
+
+    }
+
+}
+
+
+@media(max-width:480px){
+
+    .app{
+
+        width:94%;
+
+    }
+
+    .hero{
+
+        margin-bottom:36px;
+
+    }
+
+    .hero__title{
+
+        font-size:2rem;
+
+    }
+
+    .decision{
+
+        padding:20px;
+
+        gap:18px;
+
+    }
+
+    .decision__input{
+
+        padding:20px;
+
+        min-height:64px;
+
+    }
+
+    .result__actions{
+
+        flex-direction:column;
+
+    }
+
+    .button{
+
+        width:100%;
+
+    }
+
+}
+
+
+/* ==========================================
+   Reduced Motion
+========================================== */
+
+@media(prefers-reduced-motion:reduce){
+
+    *{
+
+        animation:none !important;
+
+        transition:none !important;
+
+        scroll-behavior:auto !important;
+
+    }
+
+}
