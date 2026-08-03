@@ -1,0 +1,82 @@
+/* ==========================================
+   Tiny Decision Buddy
+   Design System
+========================================== */
+
+:root{
+
+    /* Colors */
+
+    --paper:#F9F7F2;
+
+    --surface:#FFFFFF;
+
+    --surface-soft:#FCFBF8;
+
+    --forest:#6D8B68;
+
+    --forest-dark:#567052;
+
+    --sage:#B8C9AE;
+
+    --clay:#D9C7AE;
+
+    --ink:#2C2C2C;
+
+    --text:#4A4A4A;
+
+    --muted:#7C7C7C;
+
+    --line:#ECE7DF;
+
+    /* Radius */
+
+    --radius-xs:10px;
+
+    --radius-sm:16px;
+
+    --radius-md:24px;
+
+    --radius-lg:32px;
+
+    --radius-xl:42px;
+
+    /* Shadows */
+
+    --shadow-soft:
+
+        0 20px 50px rgba(0,0,0,.06);
+
+    --shadow-hover:
+
+        0 30px 60px rgba(0,0,0,.08);
+
+    /* Spacing */
+
+    --space-1:8px;
+
+    --space-2:16px;
+
+    --space-3:24px;
+
+    --space-4:32px;
+
+    --space-5:48px;
+
+    --space-6:64px;
+
+    --space-7:96px;
+
+    /* Animation */
+
+    --fast:.2s;
+
+    --normal:.35s;
+
+    --slow:.6s;
+
+    /* Max Width */
+
+    --container:680px;
+
+}
