@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiny Decision Buddy</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Floating Background -->
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
+
+    <!-- Main Card -->
+    <main class="container">
+
+        <div class="buddy-section">
+
+            <div id="buddy" class="buddy">
+
+                <div class="eyes">
+                    <span class="eye"></span>
+                    <span class="eye"></span>
+                </div>
+
+                <div class="mouth"></div>
+
+            </div>
+
+            <h1>Tiny Decision Buddy</h1>
+
+            <p class="subtitle">
+                A tiny companion for life's tiny decisions.
+            </p>
+
+        </div>
+
+        <!-- Question -->
+
+        <div class="input-area">
+
+            <input
+                id="questionInput"
+                type="text"
+                maxlength="150"
+                placeholder="Should I buy that book?"
+            >
+
+            <button id="decideBtn">
+                🌼 Help Me Decide
+            </button>
+
+        </div>
+
+        <!-- Thinking -->
+
+        <div id="thinking" class="thinking hidden">
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+            <p>Thinking...</p>
+
+        </div>
+
+        <!-- Result -->
+
+        <section id="resultCard" class="result-card hidden">
+
+            <h2 id="category"></h2>
+
+            <p id="response"></p>
+
+            <button id="againBtn">
+                Decide Again
+            </button>
+
+        </section>
+
+        <!-- History -->
+
+        <section class="history">
+
+            <div class="history-header">
+
+                <h3>Recent Decisions</h3>
+
+                <button id="clearHistory">
+                    Clear
+                </button>
+
+            </div>
+
+            <ul id="historyList">
+
+                <li>No decisions yet.</li>
+
+            </ul>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+
+    <footer>
+
+        Built with ❤️ for indecisive humans.
+
+    </footer>
+
+    <script src="responses.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>
