@@ -1,40 +1,417 @@
-/* ======================================
+/* ==========================================================
    Tiny Decision Buddy
-   script.js
-====================================== */
+   app.js
+========================================================== */
 
-const input = document.getElementById("questionInput");
-const decideBtn = document.getElementById("decideBtn");
-const againBtn = document.getElementById("againBtn");
+/* -------------------------------
+   Elements
+-------------------------------- */
 
-const thinking = document.getElementById("thinking");
+const input = document.getElementById("question");
+const decideButton = document.getElementById("decideButton");
 
-const resultCard = document.getElementById("resultCard");
-const categoryText = document.getElementById("category");
-const responseText = document.getElementById("response");
+const loading = document.getElementById("loading");
+const loadingText = document.getElementById("loadingText");
 
+const result = document.getElementById("result");
+const resultCategory = document.getElementById("resultCategory");
+const resultTitle = document.getElementById("resultTitle");
+const resultMessage = document.getElementById("resultMessage");
+
+const againButton = document.getElementById("againButton");
+
+const historyButton = document.getElementById("historyButton");
+const closeHistory = document.getElementById("closeHistory");
+
+const historyPanel = document.getElementById("historyPanel");
 const historyList = document.getElementById("historyList");
-const clearHistoryBtn = document.getElementById("clearHistory");
 
-const buddy = document.getElementById("buddy");
 
-let history = JSON.parse(localStorage.getItem("tinyDecisionHistory")) || [];
+/* -------------------------------
+   Loading Messages
+-------------------------------- */
 
-/* ======================================
-Load History
-====================================== */
+const loadingMessages = [
 
-loadHistory();
+    "Thinking...",
 
-/* ======================================
-Events
-====================================== */
+    "Looking at the options...",
 
-decideBtn.addEventListener("click", makeDecision);
+    "Giving this some thought...",
 
-againBtn.addEventListener("click", () => {
-    input.focus();
+    "Almost there...",
+
+    "Taking a tiny moment..."
+
+];
+
+
+/* -------------------------------
+   History
+-------------------------------- */
+
+let history = JSON.parse(
+
+    localStorage.getItem("tinyBuddyHistory")
+
+) || [];
+
+
+renderHistory();
+
+
+/* -------------------------------
+   Events
+-------------------------------- */
+
+decideButton.addEventListener(
+
+    "click",
+
+    makeDecision
+
+);
+
+againButton.addEventListener(
+
+    "click",
+
+    resetApp
+
+);
+
+historyButton.addEventListener(
+
+    "click",
+
+    () => historyPanel.classList.add("is-open")
+
+);
+
+closeHistory.addEventListener(
+
+    "click",
+
+    () => historyPanel.classList.remove("is-open")
+
+);
+
+
+input.addEventListener("keydown",(e)=>{
+
+    if(e.key==="Enter"){
+
+        e.preventDefault();
+
+        makeDecision();
+
+    }
+
 });
+
+
+/* ==========================================================
+   MAIN
+========================================================== */
+
+function makeDecision(){
+
+    const question=input.value.trim();
+
+    if(question===""){
+
+        input.focus();
+
+        return;
+
+    }
+
+    hideResult();
+
+    showLoading();
+
+    loadingText.textContent=
+
+        randomItem(loadingMessages);
+
+    setTimeout(()=>{
+
+        const answer=getDecision(question);
+
+        showResult(answer);
+
+        saveHistory(question,answer);
+
+    },1800);
+
+}
+
+
+/* ==========================================================
+   Decision Engine
+========================================================== */
+
+function getDecision(question){
+
+    const q=question.toLowerCase();
+
+    /* Big decisions */
+
+    const importantWords=[
+
+        "marry",
+
+        "marriage",
+
+        "quit",
+
+        "career",
+
+        "baby",
+
+        "house",
+
+        "divorce",
+
+        "move country",
+
+        "move abroad"
+
+    ];
+
+    for(const word of importantWords){
+
+        if(q.includes(word)){
+
+            return{
+
+                category:"Big Decision",
+
+                title:"Take your time.",
+
+                message:"This sounds important. A random answer isn't enough. Reflect carefully, pray if that's part of your life, and seek wise counsel before making your decision."
+
+            };
+
+        }
+
+    }
+
+    /* Normal */
+
+    const options=[
+
+        {
+
+            category:"Go for it",
+
+            title:"Go for it.",
+
+            message:"You've spent enough time thinking. Taking the first step might teach you more than waiting."
+
+        },
+
+        {
+
+            category:"Give it time",
+
+            title:"Give it a little time.",
+
+            message:"Not every decision needs an immediate answer. Come back with fresh eyes."
+
+        },
+
+        {
+
+            category:"Maybe let this one go",
+
+            title:"I'd let this one go.",
+
+            message:"Sometimes saying no creates room for something better."
+
+        },
+
+        {
+
+            category:"Pause",
+
+            title:"Take a short break.",
+
+            message:"Drink some water, stretch, then ask yourself again."
+
+        },
+
+        {
+
+            category:"Trust yourself",
+
+            title:"You probably already know.",
+
+            message:"If you're honest with yourself, you might already know what you want."
+
+        }
+
+    ];
+
+    return randomItem(options);
+
+}
+
+
+/* ==========================================================
+   UI
+========================================================== */
+
+function showLoading(){
+
+    loading.classList.remove("hidden");
+
+    result.classList.add("hidden");
+
+}
+
+
+function hideResult(){
+
+    result.classList.add("hidden");
+
+}
+
+
+function showResult(answer){
+
+    loading.classList.add("hidden");
+
+    result.classList.remove("hidden");
+
+    resultCategory.textContent=
+
+        answer.category;
+
+    resultTitle.textContent=
+
+        answer.title;
+
+    resultMessage.textContent=
+
+        answer.message;
+
+}
+
+
+function resetApp(){
+
+    result.classList.add("hidden");
+
+    loading.classList.add("hidden");
+
+    input.value="";
+
+    input.focus();
+
+}
+
+
+/* ==========================================================
+   History
+========================================================== */
+
+function saveHistory(question,answer){
+
+    history.unshift({
+
+        question,
+
+        ...answer,
+
+        date:new Date().toLocaleDateString()
+
+    });
+
+    if(history.length>20){
+
+        history.pop();
+
+    }
+
+    localStorage.setItem(
+
+        "tinyBuddyHistory",
+
+        JSON.stringify(history)
+
+    );
+
+    renderHistory();
+
+}
+
+
+function renderHistory(){
+
+    historyList.innerHTML="";
+
+    if(history.length===0){
+
+        historyList.innerHTML=
+
+        `<p>No decisions yet.</p>`;
+
+        return;
+
+    }
+
+    history.forEach(item=>{
+
+        const card=document.createElement("div");
+
+        card.className="history-item";
+
+        card.innerHTML=`
+
+            <h3>${escapeHTML(item.question)}</h3>
+
+            <strong>${escapeHTML(item.title)}</strong>
+
+            <p>${escapeHTML(item.message)}</p>
+
+            <small>${item.date}</small>
+
+        `;
+
+        historyList.appendChild(card);
+
+    });
+
+}
+
+
+/* ==========================================================
+   Helpers
+========================================================== */
+
+function randomItem(array){
+
+    return array[
+
+        Math.floor(Math.random()*array.length)
+
+    ];
+
+}
+
+
+function escapeHTML(text){
+
+    const div=document.createElement("div");
+
+    div.textContent=text;
+
+    return div.innerHTML;
+
+}
+
+console.log("Tiny Decision Buddy ready.");});
 
 clearHistoryBtn.addEventListener("click", () => {
 
